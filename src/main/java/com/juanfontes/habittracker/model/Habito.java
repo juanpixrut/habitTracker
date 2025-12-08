@@ -2,6 +2,8 @@ package com.juanfontes.habittracker.model;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,6 +21,7 @@ public class Habito {
     private LocalDate fechaInicio;
 
     @ManyToOne
+    @JsonIgnore
     private Usuario usuario;
 
     public Habito(){
