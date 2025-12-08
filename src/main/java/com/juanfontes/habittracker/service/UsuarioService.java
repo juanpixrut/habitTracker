@@ -56,4 +56,8 @@ public class UsuarioService {
         return usuariosGMAIL;
     }
 
+    public List<Habito> buscoHabitos(){
+        return repoHabito.findAll();
+    }
+
 }

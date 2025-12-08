@@ -38,10 +38,15 @@ public class UsuarioController {
     public void agregoHabito(@RequestBody Usuario usuario, @RequestBody Habito habito) {
         usuarioService.agregoHabito(usuario, habito);
     }
-    
+
     @GetMapping("/usuario/gmail")
-    public List<Usuario> buscoUsuariosGMAIL(){
+    public List<Usuario> buscoUsuariosGMAIL() {
         return usuarioService.buscoUsuariosGMAIL();
     }
-    
+
+    @GetMapping("/usuario/habitos")
+    public List<Habito> getHabitos() {
+        return usuarioService.buscoHabitos();
+    }
+
 }
