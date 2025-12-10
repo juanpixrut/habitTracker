@@ -1,5 +1,6 @@
 package com.juanfontes.habittracker.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -19,8 +20,8 @@ public class Usuario {
 
     private String password;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Habito> habitos;
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Habito> habitos = new ArrayList<>();
 
     public Usuario(){
 
@@ -52,5 +53,9 @@ public class Usuario {
 
     public List<Habito> getHabitos(){
         return habitos;
+    }
+
+    public int getId(){
+        return this.id;
     }
 }

@@ -24,24 +24,20 @@ public class Habito {
     @JsonIgnore
     private Usuario usuario;
 
+    private boolean completado;
+
     public Habito(){
 
     }
 
-    public Habito(String nombre, String descripcion, Usuario usuario){
+    public void setNombre(String nombre){
         this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.fechaInicio = LocalDate.now();
     }
-
-    public void setNombre(){
-
+        public void setDescripcion(String desc){
+        this.descripcion = desc;
     }
-        public void setDescripcion(){
-        
-    }
-        public void setFechaInicio(){
-        
+        public void setFechaInicio(LocalDate fecha){
+        this.fechaInicio = fecha;
     }
 
         public String getNombre(){
@@ -62,6 +58,14 @@ public class Habito {
 
     public void setUsuario(Usuario usuario){
         this.usuario = usuario;
+    }
+
+    public boolean isCompletado(){
+        return completado;
+    }
+
+    public void setCompletado(boolean estado){
+        this.completado = estado;
     }
 
     

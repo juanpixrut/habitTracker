@@ -3,7 +3,7 @@ package com.juanfontes.habittracker.service;
 import com.juanfontes.habittracker.repository.HabitoRepository;
 import com.juanfontes.habittracker.repository.UsuarioRepository;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -13,51 +13,67 @@ import com.juanfontes.habittracker.model.Usuario;
 
 @Service
 public class UsuarioService {
-    private UsuarioRepository repo;
-    private HabitoRepository repoHabito;
 
-    public UsuarioService(UsuarioRepository repo, HabitoRepository repoHabito) {
+    private final UsuarioRepository repo;
+    private final HabitoRepository habitoRepo;
+
+    public UsuarioService(UsuarioRepository repo, HabitoRepository habitoRepo) {
         this.repo = repo;
-        this.repoHabito = repoHabito;
+        this.habitoRepo = habitoRepo;
     }
 
-    public Usuario buscoUsuario(String email) {
-        List<Usuario> usuarios = repo.findAll();
-        for (Usuario u : usuarios) {
-            if (u.getEmail().equalsIgnoreCase(email)) {
-                return u;
+    // LOGIN
+    public Usuario buscarPorEmail(String email) {
+        return repo.findByEmail(email);
+    }
+
+    // REGISTRO
+    public Usuario agregarUsuario(Usuario usuario) {
+
+        // 1. Guardo el usuario primero y genera su ID
+        Usuario savedUser = repo.save(usuario);
+
+        // 2. Si vienen habitos les asigno el usuario
+        if (usuario.getHabitos() != null) {
+
+            for (Habito h : usuario.getHabitos()) {
+                h.setUsuario(savedUser);
+                h.setFechaInicio(LocalDate.now());
             }
+
+            // 3. Guardar todos los habitos juntos
+            habitoRepo.saveAll(usuario.getHabitos());
         }
-        return null;
+
+        return savedUser;
     }
 
-    public void AgregoUsuario(Usuario usuario) {
-        List<Habito> habitos = usuario.getHabitos();
-        repo.save(usuario);
-        for (Habito h : habitos) {
-            h.setUsuario(usuario);
-            repoHabito.save(h);
-        }
+    // AGREGAR HABITO
+    public boolean agregarHabito(Integer userId, Habito habito) {
+        Usuario usuario = repo.findById(userId).orElse(null);
+        if (usuario == null)
+            return false;
+
+        habito.setUsuario(usuario);
+        habito.setFechaInicio(LocalDate.now());
+        habitoRepo.save(habito);
+
+        return true;
     }
 
-    public void agregoHabito(Usuario usuario, Habito habito) {
-        usuario.setHabito(habito);
-        repo.save(usuario);
+    // OBTENER HABITOS POR USUARIO
+    public List<Habito> obtenerHabitosDeUsuario(Integer userId) {
+        return habitoRepo.findByUsuarioId(userId);
     }
 
-    public List<Usuario> buscoUsuariosGMAIL(){
-        List<Usuario> usuarios = repo.findAll();
-        List<Usuario> usuariosGMAIL = new ArrayList<>();
-        for(Usuario u : usuarios){
-            if(u.getEmail().contains("gmail")){
-                usuariosGMAIL.add(u);
-            }
-        }
-        return usuariosGMAIL;
-    }
+    // MARCAR COMPLETADO
+    public boolean toggleHabito(Integer habitoId) {
+        Habito h = habitoRepo.findById(habitoId).orElse(null);
+        if (h == null)
+            return false;
 
-    public List<Habito> buscoHabitos(){
-        return repoHabito.findAll();
+        h.setCompletado(!h.isCompletado());
+        habitoRepo.save(h);
+        return true;
     }
-
 }

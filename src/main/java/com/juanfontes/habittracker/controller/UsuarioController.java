@@ -26,27 +26,22 @@ public class UsuarioController {
 
     @GetMapping("/usuario/{email}")
     public Usuario buscoUsuario(@PathVariable String email) {
-        return usuarioService.buscoUsuario(email);
+        return usuarioService.buscarPorEmail(email);
     }
 
     @PostMapping
-    public void AgregoUsuario(@RequestBody Usuario usuario) {
-        usuarioService.AgregoUsuario(usuario);
+    public Usuario AgregoUsuario(@RequestBody Usuario usuario) {
+        return usuarioService.agregarUsuario(usuario);
     }
 
-    @PostMapping("/usuario/habito")
-    public void agregoHabito(@RequestBody Usuario usuario, @RequestBody Habito habito) {
-        usuarioService.agregoHabito(usuario, habito);
+    @PostMapping("/usuario/habito/{id}")
+    public void agregoHabito(@PathVariable Integer id, @RequestBody Habito habito) {
+        usuarioService.agregarHabito(id, habito);
     }
 
-    @GetMapping("/usuario/gmail")
-    public List<Usuario> buscoUsuariosGMAIL() {
-        return usuarioService.buscoUsuariosGMAIL();
-    }
-
-    @GetMapping("/usuario/habitos")
-    public List<Habito> getHabitos() {
-        return usuarioService.buscoHabitos();
+    @GetMapping("/usuario/habito/{id}")
+    public List<Habito> getHabitos(@PathVariable Integer id) {
+        return usuarioService.obtenerHabitosDeUsuario(id);
     }
 
 }
