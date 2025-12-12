@@ -2,10 +2,13 @@ package com.juanfontes.habittracker.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,6 +45,15 @@ public class UsuarioController {
     @GetMapping("/usuario/habito/{id}")
     public List<Habito> getHabitos(@PathVariable Integer id) {
         return usuarioService.obtenerHabitosDeUsuario(id);
+    }
+
+    @PutMapping("/usuario/habito/marcar/{id}")
+    public ResponseEntity<?> marcarHabito(@PathVariable Integer id){
+        if(usuarioService.marcarHabito(id) == true){
+            return ResponseEntity.ok(id);
+        }else{
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Error...");
+        }
     }
 
 }

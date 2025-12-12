@@ -68,5 +68,9 @@ public class Habito {
         this.completado = estado;
     }
 
+    public Integer getId(){
+        return this.id;
+    }
+
     
 }

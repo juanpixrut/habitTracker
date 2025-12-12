@@ -1,28 +1,48 @@
 <!DOCTYPE HTML>
 
 <html>
-    <head>
-        <title>habittracker</title>
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
-        <div class="titular">
-            <h1 class="titulo">Habit Tracker</h1>
-            <h2 class="titulo2">Tu plataforma de confianza</h2>
-            <form action="login" method="post">
 
+<head>
+    <title>habittracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="titular">
+        <h1 class="titulo">Habit Tracker</h1>
+        <h2 class="titulo2">Tu plataforma de confianza</h2>
+    </div>
+    <div class="registro">
+        <h3 id="LOGIN">LOGIN</h3>
+        <form action="" method="post" class="form">
+            <input id="emailLogin" type="text" name="email" placeholder="EMAIL" class="ingreso">
+            <input id="passLogin" type="password" name="pass" placeholder="CONTRASENA" class="ingreso">
+            <button type="button" class="botonInicioSesion" id="botonLogin">LOGIN</button>
+        </form>
+        <a class="nuevo">Nuev@ en el sitio?</a>
+        <a class="nuevo2" href="#" id="botonRegistro">Registrate Aquí</a>
+    </div>
+
+    <div id="modalRegistro" class="modal">
+        <div class="modal-contenido">
+            <span id="cerrarModal" class="cerrar">&times;</span>
+
+            <h2>Crear cuenta</h2>
+
+            <form id="formRegistro">
+                <label>Email</label>
+                <input type="email" id="emailRegistro" required>
+
+                <label>Contraseña</label>
+                <input type="password" id="passRegistro" required>
+
+                <button type="submit">Registrarme</button>
             </form>
         </div>
-        <div class="registro">
-            <h3 id="LOGIN">LOGIN</h3>
-            <form action="" method="post" class="form">
-                <input type="text" name="email" placeholder="EMAIL" class="ingreso">
-                <input type="password" name="pass" placeholder="CONTRASENA" class="ingreso">
-                <button type="button" class="botonInicioSesion" id="botonLogin">LOGIN</button>
-            </form>
-            <a class="nuevo">Nuev@ en el sitio?</a><a class="nuevo" href="">Registrate Aqui</a>
-        </div>
-        
-        <script src="app.js"></script>
-    </body>
+    </div>
+
+    <script src="login.js"></script>
+    <script src="register.js"></script>
+</body>
+
 </html>

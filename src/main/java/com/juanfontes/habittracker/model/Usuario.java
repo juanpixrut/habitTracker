@@ -58,4 +58,12 @@ public class Usuario {
     public int getId(){
         return this.id;
     }
+
+    public static Usuario RequestToUsuario(RegisterRequest request){
+        Usuario user = new Usuario();
+        user.setEmail(request.getEmail());
+        user.setPassword(request.getPassword());
+        return user;
+    }
+
 }

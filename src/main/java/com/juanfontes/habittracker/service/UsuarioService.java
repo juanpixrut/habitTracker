@@ -76,4 +76,17 @@ public class UsuarioService {
         habitoRepo.save(h);
         return true;
     }
+
+    public boolean marcarHabito(Integer id){
+        Habito habito = habitoRepo.findById(id).orElseThrow(null);
+        if(habito == null){
+            return false;
+        }
+
+        habito.setCompletado(!habito.isCompletado());
+        habitoRepo.save(habito);
+        return true;
+
+    }
+
 }
